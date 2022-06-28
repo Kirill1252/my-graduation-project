@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load watermark %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+<!--carousel-->
+<div class="mx-auto col-lg-10 col-md-12 rounded-4 " style="box-shadow: 1px 2px 4px #000;max-width: 1400px;">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade " data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for items in gallery %}
+            <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %} rounded-4 ">
+                <img src="{{ items.photo|thumbnail_url:'cover'|watermark:'wing1, opacity=95'}}" class="d-block w-100"
+                >
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!--photo gallery-->
+<div style="margin-bottom: 50px;">
+    <div class="container">
+        <div class="row">
+            {% for items in gallery %}
+            <div class="col-lg-3 col-md-6 photo_gallery" style="margin-bottom: 10px;">
+                <a href="{% url 'gallery:photo' items.slug %}">
+                    <img src="{{ items.photo|thumbnail_url:'gallery_avatar' }}" class="rounded d-block">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Pager -->
+{% if page_obj.has_other_pages %}
+<div style="padding-right: 30px;margin-top: 10%;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end ">
+            {% if page_obj.has_previous %}
+            <li class="page-item ">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+            </li>
+            {% endif %}
+            {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+            <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+            {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+            <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% endblock %}

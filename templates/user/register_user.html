@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load watermark %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+<div class="mx-auto " style="width: 480px; margin-top: 50px; margin-bottom: 50px;">
+    <div class="border border-success p-3  border-opacity-25 rounded-2 bg-light bg-opacity-10 shadow-sm ">
+        <form method="post" enctype="multipart/form-data">
+            {{ form }}
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}
