@@ -26,6 +26,4 @@ class AnonymousFormOrders(models.Model):
     processed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'''Username: {self.name}
-         Contact: {self.email} and {self.mobile}
-                '''
+        return f'Name: {self.name}'

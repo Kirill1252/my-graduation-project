@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import platform
 from pathlib import Path
+import platform
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g*cs7d!5r#l35ib519&z-su6u66=i$(i@t1%$^n&ls0e9m1%1o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+if platform.system() == 'Linux':
+    DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = []
+if platform.system() == 'Linux':
+    ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -84,7 +87,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 if platform.system() == 'Linux':
@@ -96,7 +99,6 @@ if platform.system() == 'Linux':
         'HOST': 'localhost',
         'PORT': ''
     }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -130,7 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/var/www/html/static'
+if platform.system() == 'Linux':
+    STATIC_ROOT = '/var/www/html/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -148,8 +151,9 @@ THUMBNAIL_ALIASES = {
     '': {
         'avatar': {'size': (150, 150), 'crop': True},
         'user_avatar': {'size': (150, 150), 'crop': True},
-        'gallery_avatar': {'size': (290, 180), 'crop': True},
+        'gallery_avatar': {'size': (290, 280), 'crop': True},
         'gallery_photo': {'size': (690, 580), 'crop': True},
-        'cover': {'size': (1280, 1000), 'crop': True},
+        'cover': {'size': (1480, 900), 'crop': True},
+        'courses_avatar': {'size': (390, 380), 'crop': True},
     },
 }
