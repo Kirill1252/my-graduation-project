@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load watermark %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+<div class="card mx-auto shadow" style="max-width: 1400px; margin-top:50px; margin-bottom:200px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{% if user.avatar %}
+{{ user.avatar|thumbnail_url:'user_avatar' }}
+{% else %}
+{% static 'img/no_image.png' %}
+{% endif %}" class="img-fluid rounded-start">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Welcome {{ user.first_name }} {{ user.last_name }}</h5>
+                <p class="card-text">First Name: {{ user.first_name }}</p>
+                <p class="card-text">Last Name: {{ user.last_name }}</p>
+                <p class="card-text">Telephone: {{ user.mobile }}</p>
+                <p class="card-text">Email: {{ user.email }}</p>
+                <p class="card-text">Instagram: {{ user.instagram }}</p>
+                <p class="card-text">Facebook: {{ user.facebook }}</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-outline-secondary">
+                        <a href="{% url 'user:update_user' user.slug %}">
+                            Edit profile</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

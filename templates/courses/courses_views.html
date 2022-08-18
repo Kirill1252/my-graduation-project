@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% load thumbnail %}
+{% if courses %}
+<div class="container" style="margin-bottom: 150px;">
+    <div class="row row-cols-1 row-cols-md-3 g-4 m-auto ">
+        {% for items in courses %}
+        <div class="col">
+            <div class="card">
+                <a href="{% url 'courses:course' items.slug %}">
+                    <img src="{{ items.cover|thumbnail_url:'courses_avatar'}}" class="card-img-top" height="100%">
+                </a>
+                <div class="card-body border border-secondary rounded-bottom">
+                    <h5 class="card-title">{{ items.name }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<h5 class="text-center">Courses not yet available</h5>
+{% endif %}
+{% endblock %}

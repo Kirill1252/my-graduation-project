@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load thumbnail %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link href="{% static 'fontawesomefree/css/all.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/mycss.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--nav-->
+<nav class="navbar navbar-expand-lg bg-light my_nav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Ironika</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'courses:courses' %}">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'gallery:photo-gallery' %}">Gallery</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Category's
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        {% for category in categorys %}
+                        <li><a class="dropdown-item" href="{% url 'gallery:category' category.slug %}">
+                            {{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+            {% if request.user.is_authenticated %}
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <form class="d-flex" role="search" action="{% url 'gallery:photo-gallery' %}" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           name="search">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       href="{% url 'user:profile' user.slug %}"><i class="fa-solid fa-user"></i>
+                        {{ user.username }}</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'user:profile' user.slug %}"><i
+                                class="fa-solid fa-address-card"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user:logout' %}"><i
+                                class="fa-solid fa-right-from-bracket"></i>
+                            Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user:register' %}">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user:login' %}">Login</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<!--nav-->
+{% block content %}
+{% endblock %}
+<hr class="border-bottom " style="box-shadow: 1px 2px 4px #000;margin-top: 5%;">
+<div class="container ">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                <i class="fa-brands fa-envira"></i>
+            </a>
+            <span class="text-muted">Ironika © 2022</span>
+        </div>
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-muted p-3" href="#"><i class="fa-solid fa-envelope"
+                                                                   style="font-size:25px;"></i></a></li>
+            <li class="ms-3"><a class="text-muted p-3" href="#"><i class="fa-brands fa-instagram"
+                                                                   style="font-size:25px;"></i></a></li>
+            <li class="ms-3"><a class="text-muted p-3" href="#"><i class="fa-brands fa-telegram"
+                                                                   style="font-size:25px;"></i></a></li>
+        </ul>
+    </footer>
+</div>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

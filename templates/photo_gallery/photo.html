@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load watermark %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+<div class="container card shadow-lg m-auto p-3 mb-5 bg-body rounded">
+    <div class="row">
+        <div class="col-lg-7" style="margin-bottom: 10px;">
+            <img src="{{ photo.photo|thumbnail_url:'gallery_photo'|watermark:'wing1, opacity=75' }}"
+                 class="h-100 rounded-start" width="100%">
+        </div>
+        <div class="col-lg-5">
+            <div class="card-body">
+                <h5 class="card-title text-center m-2">{{ photo.title }}</h5>
+                <p class="card-text text-center">{{ photo.content }}</p>
+                <p class="card-text text-end m-5"><small class="text-muted">Price: {{ photo.price }} $</small></p>
+            </div>
+            {% if request.user.is_authenticated %}
+            <!-- Button trigger modal -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end m-5">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#OrderForm">
+                    Order form
+                </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="OrderForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="OrderFormLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="OrderFormLabel">Check the data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Do you want to place an order?</h6>
+                            <p>
+                                Please check your details before placing an order.
+                            </p>
+                            <p>Email: {{ user.email }}</p>
+                            <p>Telephone: {{ user.mobile }}</p>
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ authenticated_form }}
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Send an order</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                {% else %}
+                <!-- Button trigger modal  Anonymous-->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end m-5">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#AnonymousForm">
+                        Order form
+                    </button>
+                </div>
+                <!-- Modal Anonymous-->
+                <div class="modal fade" id="AnonymousForm" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1"
+                     aria-labelledby="AnonymousFormLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="AnonymousFormLabel">Order form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Do you want to place an order?</h6>
+                                <p>
+                                    Enter your details so we can contact you.
+                                </p>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ anonymous_form }}
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Send an order</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}

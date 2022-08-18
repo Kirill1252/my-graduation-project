@@ -1,0 +1,46 @@
+body{
+	margin:0;
+	padding:0;
+	background-image: url(../img/2.jpg);
+
+}
+
+.foter_color{
+	background-color:#000000;
+	width: 100%;
+}
+
+.my_nav{
+	width: 100%;
+	
+	border-bottom: 2px solid;
+	margin-bottom: 20px;
+	box-shadow: 1px 2px 4px #000;
+}
+
+.carousel-item {
+  height: 580px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-item img {
+    height: 100%;
+    width: 1200px;   
+	
+}
+
+
+.navbar-nav .dropdown-menu{
+    right: 0;
+    left: auto;
+
+}
+.photo_gallery{
+	margin-top: 30px;
+}
+
+.photo_gallery img{
+	width: 100%;
+	box-shadow: 1px 2px 4px #000;
+}
