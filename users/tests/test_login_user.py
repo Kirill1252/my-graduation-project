@@ -103,7 +103,6 @@ class TestLoginUser(TestCase, Client):
 
     def test_ban_on_viewing_pages_of_other_users(self):
         response = self.client.get('/user/profile/user1/')
-        print(response.status_code, '<<<<<')
         self.assertEqual(response.status_code, 302)
         html = response.content.decode('utf-8')
         self.assertInHTML('''<title>User page</title>''', html, False)

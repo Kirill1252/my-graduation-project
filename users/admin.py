@@ -24,7 +24,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': (
                 'slug',
                 'instagram',
-                'fecebook',
+                'facebook',
                 'avatar',
                 'mobile'
             )
@@ -36,7 +36,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': (
                 'slug',
                 'instagram',
-                'fecebook',
+                'facebook',
                 'avatar',
                 'mobile'
             )
